@@ -25,4 +25,4 @@ if [[ $PMSET_OUTPUT == *"AC Power"* ]]; then
   ICON=""
 fi
 
-sketchybar --set "$NAME" icon="$ICON" label="$PERCENTAGE%" label.color="$COLOR"
+sketchybar --set "$NAME" icon="$ICON" icon.color="$COLOR" label="$PERCENTAGE%" label.color="$COLOR"
