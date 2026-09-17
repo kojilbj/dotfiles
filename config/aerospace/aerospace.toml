@@ -41,10 +41,10 @@ default-root-container-orientation = 'auto'
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# Tells the SketchyBar Lua config (items/spaces.lua) to rebuild the
-# workspace list, since it shows a dynamic set (occupied + focused) rather
-# than a fixed range.
-exec-on-workspace-change = ['/bin/sh', '-c', 'sketchybar --trigger aerospace_workspace_change']
+# Tells SketchyBar (plugins/workspace.sh) which workspace is now focused,
+# so the indicator highlights it without each of the ten workspace items
+# having to shell out to `aerospace` itself on every event.
+exec-on-workspace-change = ['/bin/bash', '-c', 'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
