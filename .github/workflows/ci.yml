@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck install.sh
+        run: shellcheck install.sh
+
+  zsh-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh
+      - name: Syntax-check shell configs
+        run: |
+          zsh -n zshrc
+          zsh -n zshenv
+          zsh -n zprofile
+
+  install-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run install.sh
+        run: ./install.sh
+      - name: Verify symlinks
+        run: |
+          set -euo pipefail
+          declare -A links=(
+            [".zshrc"]="zshrc"
+            [".zshenv"]="zshenv"
+            [".zprofile"]="zprofile"
+            [".p10k.zsh"]="p10k.zsh"
+            [".vimrc"]="vimrc"
+            [".yarnrc"]="yarnrc"
+            [".gitconfig"]="gitconfig"
+            [".gitignore"]="gitignore"
+            [".config/git/ignore"]="config/git/ignore"
+            [".config/nvim"]="config/nvim"
+            [".config/wezterm"]="config/wezterm"
+          )
+          for target in "${!links[@]}"; do
+            expected="$GITHUB_WORKSPACE/${links[$target]}"
+            actual="$(readlink -f "$HOME/$target")"
+            resolved_expected="$(readlink -f "$expected")"
+            if [ "$actual" != "$resolved_expected" ]; then
+              echo "MISMATCH: $target -> $actual (expected $resolved_expected)"
+              exit 1
+            fi
+            echo "ok: $target"
+          done
+      - name: Run install.sh again (idempotency check)
+        run: ./install.sh
