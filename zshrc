@@ -29,6 +29,7 @@ alias dpenv="deactivate"
 alias vim="nvim"
 
 alias restart="exec $SHELL -l"
+alias deco="~/dotfiles/bin/deco.sh"
 
 repo() {
   # 現在の 'origin' リモートの 'fetch' URLを取得

@@ -23,6 +23,12 @@
 | `config/git/ignore` | `~/.config/git/ignore`（グローバルgitignore） |
 | `config/nvim/` | `~/.config/nvim/`（LazyVim） |
 | `config/wezterm/` | `~/.config/wezterm/` |
+| `config/aerospace/` | `~/.config/aerospace/`（AeroSpace） |
+| `config/borders/` | `~/.config/borders/`（JankyBorders、フォーカス枠線） |
+| `config/sketchybar/` | `~/.config/sketchybar/`（SketchyBar、サンプル設定） |
+| `config/btop/` | `~/.config/btop/` |
+| `config/cava/` | `~/.config/cava/`（シェーダー・テーマ含む） |
+| `config/gh/config.yml` | `~/.config/gh/config.yml`（GitHub CLI。`hosts.yml`は認証情報のため対象外） |
 
 秘密鍵・トークン・履歴ファイル・キャッシュの類は意図的に含めていない。
 

@@ -21,6 +21,12 @@ LINKS=(
   "config/git/ignore:.config/git/ignore"
   "config/nvim:.config/nvim"
   "config/wezterm:.config/wezterm"
+  "config/aerospace:.config/aerospace"
+  "config/borders:.config/borders"
+  "config/sketchybar:.config/sketchybar"
+  "config/btop:.config/btop"
+  "config/cava:.config/cava"
+  "config/gh/config.yml:.config/gh/config.yml"
 )
 
 backup_needed=false
