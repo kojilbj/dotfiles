@@ -19,7 +19,7 @@ if [[ "$TRANSPORT" == "coreaudio_device_type_bluetooth" ]]; then
   # SF Symbols has no bluetooth glyph (Apple can't redistribute the
   # trademarked logo), so this one icon uses Hack Nerd Font instead
   # (nf-fa-bluetooth, verified present via fontTools).
-  sketchybar --set "$NAME" drawing=on icon="$(printf '')" icon.font="Hack Nerd Font:Bold:16.0" label=""
+  sketchybar --set "$NAME" drawing=on icon="$(printf '')" icon.font="Hack Nerd Font:Bold:20.0" label=""
 else
   sketchybar --set "$NAME" drawing=off
 fi
