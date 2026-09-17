@@ -23,6 +23,8 @@
 | `config/git/ignore` | `~/.config/git/ignore`（グローバルgitignore） |
 | `config/nvim/` | `~/.config/nvim/`（LazyVim） |
 | `config/wezterm/` | `~/.config/wezterm/` |
+| `config/aerospace/` | `~/.config/aerospace/`（AeroSpace） |
+| `config/borders/` | `~/.config/borders/`（JankyBorders、フォーカス枠線） |
 
 秘密鍵・トークン・履歴ファイル・キャッシュの類は意図的に含めていない。
 

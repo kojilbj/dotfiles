@@ -21,6 +21,8 @@ LINKS=(
   "config/git/ignore:.config/git/ignore"
   "config/nvim:.config/nvim"
   "config/wezterm:.config/wezterm"
+  "config/aerospace:.config/aerospace"
+  "config/borders:.config/borders"
 )
 
 backup_needed=false
