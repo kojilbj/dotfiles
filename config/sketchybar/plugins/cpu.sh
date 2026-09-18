@@ -7,4 +7,14 @@
 # unlike digits they don't reliably keep the pill (and its distance from
 # the notch) constant.
 CPU=$(top -l 2 -n 0 | awk '/CPU usage/ {usage = $3 + $5} END {printf "%04.1f", usage}')
-sketchybar --set "$NAME" label="$CPU%"
+
+# Same green/yellow/red progression as battery.sh, keyed off usage instead
+# of charge remaining.
+COLOR=$(awk -v u="$CPU" 'BEGIN {
+  if (u < 30)      print "0xff80e27e";
+  else if (u < 60) print "0xffbef67a";
+  else if (u < 80) print "0xffffeb3b";
+  else             print "0xffff0000";
+}')
+
+sketchybar --set "$NAME" label="$CPU%" icon.color="$COLOR"

@@ -8,8 +8,8 @@ fi
 PERCENTAGE=${BASH_REMATCH[1]}
 
 case "$PERCENTAGE" in
-  100)    ICON="󰁹"; COLOR="0xff4caf50" ;; #4caf50
-  9[0-9]) ICON="󰂂"; COLOR="0xff4caf50" ;;
+  100)    ICON="󰁹"; COLOR="0xff80e27e" ;; #80e27e
+  9[0-9]) ICON="󰂂"; COLOR="0xff80e27e" ;;
   8[0-9]) ICON="󰂁"; COLOR="0xff80e27e" ;; #80e27e
   7[0-9]) ICON="󰂀"; COLOR="0xff80e27e" ;;
   6[0-9]) ICON="󰁿"; COLOR="0xff80e27e" ;;
@@ -25,4 +25,4 @@ if [[ $PMSET_OUTPUT == *"AC Power"* ]]; then
   ICON=""
 fi
 
-sketchybar --set "$NAME" icon="$ICON" label="$PERCENTAGE%" label.color="$COLOR"
+sketchybar --set "$NAME" icon="$ICON" icon.color="$COLOR" label="$PERCENTAGE%" label.color="$COLOR"
