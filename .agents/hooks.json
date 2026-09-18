@@ -1,15 +1,15 @@
 {
-  "tab-status": {
+  "tab-status-and-notify": {
     "PreInvocation": [
       {
         "type": "command",
-        "command": "bash ~/.claude/set-tab-status.sh running && echo '{}'"
+        "command": "bash ~/.gemini/pre-invocation-hook.sh"
       }
     ],
     "Stop": [
       {
         "type": "command",
-        "command": "bash ~/.claude/set-tab-status.sh waiting && echo '{}'"
+        "command": "bash ~/.gemini/stop-hook.sh"
       }
     ]
   }
