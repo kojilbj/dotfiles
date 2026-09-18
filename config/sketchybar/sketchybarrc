@@ -23,13 +23,13 @@ sketchybar --bar "${bar[@]}"
 default=(
   label.font='Osaka:Regular-Mono:16'
   label.color=0xffffffff
-  label.padding_left=4
+  label.padding_left=2
   label.padding_right=10
   icon.font.size=18
   icon.color=0xffffffff
   icon.padding_left=10
-  icon.padding_right=4
-  popup.background.color=0x6a282a36
+  icon.padding_right=2
+  popup.background.color=0x6a002b36
   popup.background.border_width=1
   popup.background.border_color=0x48ffffff
   popup.background.corner_radius=3
@@ -58,7 +58,7 @@ add_bracket() {
   local config=(
     blur_radius=10
     background.height=32
-    background.color=0x6a282a36
+    background.color=0x6a002b36
     background.corner_radius=8
     background.border_width=1
     background.border_color=0x48ffffff
@@ -120,6 +120,7 @@ add_item workspace.icon left \
   icon='􀏧' \
   icon.font.size=14 \
   icon.padding_right=5 \
+  icon.color=0xffffd54f \
   label.drawing=off
 for sid in {1..9} 0; do
   add_item "workspace.$sid" left \
@@ -141,6 +142,7 @@ add_spacer left
 add_item front_app left \
   icon='􀆊' \
   icon.font.size=14 \
+  icon.color=0xfff06292 \
   label.padding_left=10 \
   script="$PLUGIN_DIR/front_app.sh" \
   --subscribe front_app_switched
@@ -151,11 +153,13 @@ add_bracket front_app_bracket front_app
 # Time & Date
 add_item time right \
   icon='􀐫' \
+  icon.color=0xff64b5f6 \
   script="$PLUGIN_DIR/time.sh" \
   update_freq=1 \
   label.width=80
 add_item date right \
   icon='􀉉' \
+  icon.color=0xffffb74d \
   script="$PLUGIN_DIR/date.sh" \
   --subscribe system_woke date_boundary
 add_bracket datetime_bracket date time
@@ -173,23 +177,22 @@ add_bracket battery_bracket battery
 # Spacer
 add_spacer right
 
-# Volume (+ connected Bluetooth headphones/earphones, when in use as the
-# default audio output)
-add_item bluetooth_audio right \
-  script="$PLUGIN_DIR/bluetooth_audio.sh" \
-  update_freq=3 \
-  drawing=off
+# Volume (icon turns Bluetooth-blue when the default audio output is a
+# Bluetooth device, e.g. AirPods)
 add_item volume right \
+  icon.color=0xffff5252 \
   script="$PLUGIN_DIR/volume.sh" \
   icon.width=36 \
+  update_freq=3 \
   --subscribe volume_change
-add_bracket volume_bracket bluetooth_audio volume
+add_bracket volume_bracket volume
 
 # Spacer
 add_spacer right
 
 # Wi-Fi
 add_item wifi right \
+  icon.color=0xff4dd0e1 \
   script="$PLUGIN_DIR/wifi.sh" \
   update_freq=2 \
   --subscribe wifi_change
