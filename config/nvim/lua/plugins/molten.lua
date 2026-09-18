@@ -72,6 +72,17 @@ return {
       { "<leader>jh", "<cmd>MoltenHideOutput<cr>", desc = "Hide output" },
       { "<leader>jd", "<cmd>MoltenDelete<cr>", desc = "Delete cell output" },
       { "<leader>jx", "<cmd>MoltenInterrupt<cr>", desc = "Interrupt kernel" },
+      {
+        "<leader>jn",
+        function()
+          -- カーソル行の下に空のpythonコードセルを挿入し、中に入る
+          local row = vim.api.nvim_win_get_cursor(0)[1]
+          vim.api.nvim_buf_set_lines(0, row, row, false, { "", "```python", "", "```", "" })
+          vim.api.nvim_win_set_cursor(0, { row + 3, 0 })
+          vim.cmd("startinsert")
+        end,
+        desc = "New cell below",
+      },
     },
   },
   -- .ipynbを直接開いて編集できるようにする(裏でjupytextコマンドを使って変換)

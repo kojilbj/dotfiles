@@ -21,6 +21,7 @@ export EDITOR=vim
 
 alias cdd="/Users/watanabekoji/Desktop"
 alias cdf="/Users/watanabekoji/42"
+alias cdo="/Users/watanabekoji/Obsidian"
 alias rm="trash"
 alias p="python"
 alias penv="python3 -m venv .venv"

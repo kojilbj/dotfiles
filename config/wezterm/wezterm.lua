@@ -54,11 +54,15 @@ local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_left_half_circle_thick
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_right_half_circle_thick
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local is_claude = (tab.active_pane.foreground_process_name or ""):find("claude") ~= nil
+	local proc = tab.active_pane.foreground_process_name or ""
+	local is_claude = proc:find("claude") ~= nil
+	local is_antigravity = proc:find("agy") ~= nil or proc:find("antigravity") ~= nil or (tab.active_pane.title or ""):find("agy") ~= nil
 	-- Stopフック(set-tab-status.sh)がセットするユーザー変数。応答完了・入力待ちの間だけ緑にする。
 	-- is_claudeには依存しない: claudecode.nvim経由でnvim内にネストして動いている場合、
 	-- WezTermからのforeground_process_nameは"nvim"に見えてis_claudeがfalseになるため。
 	local is_waiting = tab.active_pane.user_vars.claude_status == "waiting"
+		or tab.active_pane.user_vars.agy_status == "waiting"
+		or tab.active_pane.user_vars.antigravity_status == "waiting"
 
 	local background = "#5c6d74"
 	local foreground = "#FFFFFF"
@@ -66,6 +70,10 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	if is_claude then
 		-- Claude Codeが動いているタブはオレンジにする
 		background = "#ff9e64"
+		foreground = "#1a1b26"
+	elseif is_antigravity then
+		-- Antigravityが動いているタブはパープルにする
+		background = "#bb9af7"
 		foreground = "#1a1b26"
 	end
 	if is_waiting then
@@ -75,10 +83,14 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	if tab.is_active then
 		if is_waiting then
 			background = "#c3e88d"
+		elseif is_claude then
+			background = "#ffb380"
+		elseif is_antigravity then
+			background = "#caa6f7"
 		else
-			background = is_claude and "#ffb380" or "#38bdf8"
+			background = "#38bdf8"
 		end
-		foreground = (is_claude or is_waiting) and "#1a1b26" or "#FFFFFF"
+		foreground = (is_claude or is_antigravity or is_waiting) and "#1a1b26" or "#FFFFFF"
 	end
 	local edge_foreground = background
 	local full_title = tab.active_pane.title
@@ -86,6 +98,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		-- 先頭のスピナー部分だけ残して、それ以外の文字列は"Claude Code"に固定する
 		local spinner = full_title:match("^(%S+)")
 		full_title = spinner and (spinner .. " Claude Code") or "Claude Code"
+	elseif is_antigravity then
+		full_title = "Antigravity"
 	end
 	local truncated = wezterm.truncate_right(full_title, max_width - 1)
 	if truncated ~= full_title then
