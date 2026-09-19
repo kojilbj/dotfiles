@@ -124,6 +124,9 @@ gaps.outer.right =      10
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
+    # i3/sway-style floating toggle (the service-mode 'f' binding below still
+    # works too; this just avoids the alt-shift-; prefix for a common action)
+    alt-shift-space = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
