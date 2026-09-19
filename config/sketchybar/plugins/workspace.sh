@@ -44,8 +44,8 @@ while IFS= read -r app; do
   __app_color "$app"
   ICON_ALPHA="$color_result"
   if [ "$FOCUSED" != "$SID" ]; then
-    # Dim unfocused workspaces' icons a bit, same spirit as the number label.
-    ICON_ALPHA="0xb0${color_result#0xff}"
+    # Dim unfocused workspaces' icons slightly, keeping high contrast on dark background.
+    ICON_ALPHA="0xd8${color_result#0xff}"
   fi
   sketchybar --set "workspace.$SID.app$slot" icon.drawing=on icon="$icon_result" icon.color="$ICON_ALPHA"
 done <<< "$apps"
