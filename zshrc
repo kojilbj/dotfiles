@@ -200,8 +200,3 @@ export PATH="$HOME/.local/bin:$PATH"
 # Added by Antigravity CLI installer
 export PATH="/Users/watanabekoji/.local/bin:$PATH"
 
-
-# Mission Controlやステージマネージャなどのシステム画面で非表示にする設定（一例）
-borders whitelist="^.*$" # 基本はすべてのアプリを対象にしつつ
-borders blacklist="^Dock$|^System...$" # 必要に応じてDock等のシステムUIを除外
-
