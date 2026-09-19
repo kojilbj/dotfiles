@@ -4,94 +4,91 @@
 # Usage: __app_color "$app_name"; result in $color_result (0xAARRGGBB).
 
 __app_color() {
-  color_result=0xffcccccc # fallback: light gray, for apps not listed below
+  color_result=0xffe2e8f0 # fallback: clear light slate gray for unlisted apps
   case "$1" in
     "WezTerm")
-      color_result=0xff8250df
+      color_result=0xffa78bfa # bright lavender purple
       ;;
     "Terminal"|"iTerm2")
-      color_result=0xff2ecc71
+      color_result=0xff4ade80 # bright terminal neon green
       ;;
-    "Brave Browser")
-      color_result=0xfffb542b
+    "Brave Browser"|"Brave Browser Beta"|"Brave Browser Nightly")
+      color_result=0xffff6b4a # vibrant orange
       ;;
     "Safari"|"Safari Technology Preview")
-      color_result=0xff006cff
+      color_result=0xff60a5fa # bright sky blue
       ;;
     "Google Chrome"|"Google Chrome Canary"|"Microsoft Edge"|"Arc")
-      color_result=0xff4285f4
+      color_result=0xff58a6ff # vibrant cyan blue
       ;;
     "Firefox"|"Firefox Developer Edition")
-      color_result=0xffff6611
+      color_result=0xffff7830 # bright flame orange
       ;;
     "Music")
-      color_result=0xfffa2d48
+      color_result=0xfffb5c73 # bright coral pink/red
       ;;
     "Spotify")
-      color_result=0xff1ed760
+      color_result=0xff22c55e # vibrant spotify green
       ;;
     "Obsidian")
-      color_result=0xff7c3aed
+      color_result=0xffa855f7 # bright purple
       ;;
     "Notion")
-      color_result=0xffffffff
+      color_result=0xffffffff # crisp white
       ;;
     "Finder")
-      color_result=0xff1e88e5
+      color_result=0xff38bdf8 # bright cyan blue
       ;;
     "System Settings"|"System Preferences")
-      color_result=0xff8e8e93
+      color_result=0xffcbd5e1 # bright silver gray
       ;;
     "Visual Studio Code"|"Code"|"VSCodium")
-      color_result=0xff007acc
+      color_result=0xff38bdf8 # bright vscode cyan blue
       ;;
     "Xcode")
-      color_result=0xff147efb
+      color_result=0xff60a5fa # bright xcode blue
       ;;
     "Slack")
-      color_result=0xff4a154b
+      color_result=0xffe879f9 # bright magenta/orchid (avoiding dark eggplant)
       ;;
     "Discord")
-      color_result=0xff5865f2
+      color_result=0xff818cf8 # bright blurple / indigo
       ;;
     "Zoom"|"zoom.us")
-      color_result=0xff2d8cff
+      color_result=0xff60a5fa # bright zoom blue
       ;;
     "Mail")
-      color_result=0xff4dabff
+      color_result=0xff70b8ff # bright mail blue
       ;;
     "Calendar")
-      color_result=0xfffc3d39
+      color_result=0xfffb7185 # bright rose red
       ;;
     "Messages")
-      color_result=0xff2fd058
+      color_result=0xff4ade80 # bright message green
       ;;
     "Notes")
-      color_result=0xffffcc02
+      color_result=0xfffde047 # bright notes yellow
       ;;
     "Reminders")
-      color_result=0xffff9500
+      color_result=0xfffb923c # bright reminders orange
       ;;
     "Figma")
-      color_result=0xfff24e1e
+      color_result=0xffff6434 # bright figma coral
       ;;
     "Docker"|"Docker Desktop")
-      color_result=0xff2496ed
+      color_result=0xff38bdf8 # bright docker cyan
       ;;
     "1Password"|"1Password 7"|"1Password 8")
-      color_result=0xff1a8cff
+      color_result=0xff60a5fa # bright 1password blue
       ;;
     "Preview")
-      color_result=0xff58b3ff
+      color_result=0xff7dd3fc # bright preview light blue
       ;;
     "Activity Monitor")
-      color_result=0xff5ac8fa
+      color_result=0xff67e8f9 # bright activity monitor cyan
       ;;
     "GitHub Desktop")
-      color_result=0xff24292e
-      ;;
-    "Brave Browser Beta"|"Brave Browser Nightly")
-      color_result=0xfffb542b
+      color_result=0xffcbd5e1 # bright octocat silver (avoiding dark black/gray)
       ;;
   esac
 }
