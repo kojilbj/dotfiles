@@ -110,19 +110,6 @@ for sid in {1..9} 0; do
 done
 add_bracket workspace_bracket '/workspace\..*/'
 
-# Spacer
-add_spacer left
-
-# Front App
-add_item front_app left \
-  icon='􀆊' \
-  icon.font.size=14 \
-  icon.color=0xfff06292 \
-  label.padding_left=10 \
-  script="$PLUGIN_DIR/front_app.sh" \
-  --subscribe front_app_switched
-add_bracket front_app_bracket front_app
-
 ########## Right Items ##########
 
 # Time & Date
