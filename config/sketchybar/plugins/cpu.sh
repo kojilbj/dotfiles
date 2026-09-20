@@ -6,7 +6,7 @@
 # leading spaces can't be trusted to reserve real width in every font, so
 # unlike digits they don't reliably keep the pill (and its distance from
 # the notch) constant.
-CPU=$(top -l 2 -n 0 | awk '/CPU usage/ {usage = $3 + $5} END {printf "%04.1f", usage}')
+CPU=$(top -l 2 -n 0 | awk '/CPU usage/ {usage = $3 + $5; if (usage > 100.0) usage = 100.0} END {printf "%04.1f", usage}')
 
 # Same green/yellow/red progression as battery.sh, keyed off usage instead
 # of charge remaining.
