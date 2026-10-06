@@ -118,6 +118,58 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- エクスプローラー(左サイドバー)を閉じた時、空いた幅が隣の1つのウィンドウに丸ごと入って
+-- 分割比率が崩れるため、横に並んだ通常のファイルウィンドウだけ幅を均等に戻す。
+-- (equalalways=falseにしてあるので自動では揃わない。claudecodeのターミナルpane等は
+--  buftypeが空でないので対象外にして、幅が変わらないようにしている)
+local function equalize_file_windows()
+  local groups = {}
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local cfg = vim.api.nvim_win_get_config(win)
+    local buf = vim.api.nvim_win_get_buf(win)
+    if cfg.relative == "" and vim.bo[buf].buftype == "" and not vim.wo[win].winfixwidth then
+      local row = vim.api.nvim_win_get_position(win)[1]
+      -- 同じ高さ・同じ行から始まるウィンドウ = 横に並んでいるもの
+      local key = row .. ":" .. vim.api.nvim_win_get_height(win)
+      groups[key] = groups[key] or {}
+      table.insert(groups[key], win)
+    end
+  end
+
+  for _, wins in pairs(groups) do
+    local n = #wins
+    if n > 1 then
+      table.sort(wins, function(a, b)
+        return vim.api.nvim_win_get_position(a)[2] < vim.api.nvim_win_get_position(b)[2]
+      end)
+      local total = n - 1 -- 区切り線の分
+      for _, win in ipairs(wins) do
+        total = total + vim.api.nvim_win_get_width(win)
+      end
+      local each = math.floor((total - (n - 1)) / n)
+      for i = 1, n - 1 do
+        vim.api.nvim_win_set_width(wins[i], each)
+      end
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("WinClosed", {
+  group = vim.api.nvim_create_augroup("equalize_after_explorer", { clear = true }),
+  callback = function(ev)
+    local win = tonumber(ev.match)
+    if not (win and vim.api.nvim_win_is_valid(win)) then
+      return
+    end
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype ~= "snacks_picker_list" then
+      return
+    end
+    -- ウィンドウが実際に閉じ終わってから揃える
+    vim.schedule(equalize_file_windows)
+  end,
+})
+
 -- ウィンドウ(pane)・バッファを離れた時と、Neovim自体のフォーカスが外れた時に自動保存する
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
   group = vim.api.nvim_create_augroup("autosave", { clear = true }),
