@@ -118,8 +118,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- 挿入モードを抜けた時・フォーカスが外れた時に自動保存する
-vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
+-- フォーカスが外れた時に自動保存する
+vim.api.nvim_create_autocmd("FocusLost", {
   group = vim.api.nvim_create_augroup("autosave", { clear = true }),
   callback = function(ev)
     local b = vim.bo[ev.buf]
