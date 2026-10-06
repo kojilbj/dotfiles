@@ -117,3 +117,14 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<Esc>", "<cmd>q<cr>", { buffer = ev.buf, silent = true })
   end,
 })
+
+-- 挿入モードを抜けた時・フォーカスが外れた時に自動保存する
+vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
+  group = vim.api.nvim_create_augroup("autosave", { clear = true }),
+  callback = function(ev)
+    local b = vim.bo[ev.buf]
+    if b.modified and b.buftype == "" and vim.api.nvim_buf_get_name(ev.buf) ~= "" then
+      vim.cmd("silent! update")
+    end
+  end,
+})
