@@ -118,8 +118,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- フォーカスが外れた時に自動保存する
-vim.api.nvim_create_autocmd("FocusLost", {
+-- ウィンドウ(pane)・バッファを離れた時と、Neovim自体のフォーカスが外れた時に自動保存する
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
   group = vim.api.nvim_create_augroup("autosave", { clear = true }),
   callback = function(ev)
     local b = vim.bo[ev.buf]
