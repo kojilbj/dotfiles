@@ -122,9 +122,19 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
   group = vim.api.nvim_create_augroup("autosave", { clear = true }),
   callback = function(ev)
-    local b = vim.bo[ev.buf]
-    if b.modified and b.buftype == "" and vim.api.nvim_buf_get_name(ev.buf) ~= "" then
-      vim.cmd("silent! update")
-    end
+    local buf = ev.buf
+    -- WinLeave/BufLeaveの最中に書き込むとBufWritePre(LSP整形)が正しく効かないため、
+    -- イベント処理が終わってから対象バッファで保存する
+    vim.schedule(function()
+      if not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      local b = vim.bo[buf]
+      if b.modified and b.buftype == "" and vim.api.nvim_buf_get_name(buf) ~= "" then
+        vim.api.nvim_buf_call(buf, function()
+          vim.cmd("silent! update")
+        end)
+      end
+    end)
   end,
 })
