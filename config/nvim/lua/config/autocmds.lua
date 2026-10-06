@@ -117,3 +117,24 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<Esc>", "<cmd>q<cr>", { buffer = ev.buf, silent = true })
   end,
 })
+
+-- ウィンドウ(pane)・バッファを離れた時と、Neovim自体のフォーカスが外れた時に自動保存する
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
+  group = vim.api.nvim_create_augroup("autosave", { clear = true }),
+  callback = function(ev)
+    local buf = ev.buf
+    -- WinLeave/BufLeaveの最中に書き込むとBufWritePre(LSP整形)が正しく効かないため、
+    -- イベント処理が終わってから対象バッファで保存する
+    vim.schedule(function()
+      if not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      local b = vim.bo[buf]
+      if b.modified and b.buftype == "" and vim.api.nvim_buf_get_name(buf) ~= "" then
+        vim.api.nvim_buf_call(buf, function()
+          vim.cmd("silent! update")
+        end)
+      end
+    end)
+  end,
+})
