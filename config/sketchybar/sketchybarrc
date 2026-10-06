@@ -173,3 +173,5 @@ add_bracket sysinfo_bracket cpu
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
+
+pkill -x sketchybar-toggle; sketchybar-toggle &
