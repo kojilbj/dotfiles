@@ -15,10 +15,11 @@ import Foundation
 // public NSDistributedNotification reliably fires on MC enter/exit either
 // (sniffed all distributed notifications while toggling MC: none). So this
 // polls CGWindowListCopyWindowInfo for the window Mission Control itself
-// draws (owner "WindowManager", name "ExposeShieldWindow") and toggles
-// borders fully transparent for exactly as long as that window exists.
-// Checked this doesn't also fire on plain Dock auto-hide reveal, which
-// creates a different, non-unique full-screen "Dock"-owned window.
+// draws and toggles borders fully transparent for exactly as long as that
+// window exists. Through macOS 15 it was named "ExposeShieldWindow"; on
+// macOS 27 it has no name, so match the full-screen "WindowManager" window
+// at layer 19, which exists only while Mission Control is open (checked:
+// absent otherwise, and Dock auto-hide creates a "Dock"-owned window).
 //
 // Launched via aerospace.toml's after-startup-command, alongside borders
 // and sketchybar themselves.
@@ -35,7 +36,7 @@ func missionControlActive() -> Bool {
     }
     for w in list {
         if (w[kCGWindowOwnerName as String] as? String) == "WindowManager",
-           (w[kCGWindowName as String] as? String) == "ExposeShieldWindow" {
+           (w[kCGWindowLayer as String] as? Int) == 19 {
             return true
         }
     }
