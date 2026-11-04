@@ -4,3 +4,10 @@
 --
 vim.keymap.set("i", "jj", "<Esc>", { desc = "Escape insert mode with jj" })
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+vim.keymap.set("n", "<leader>bn", ":badd ", { desc = "Add Buffer (no window)" })
+
+vim.keymap.set("n", "<leader>rk", function()
+  vim.cmd("source " .. vim.fn.stdpath("config") .. "/lua/config/keymaps.lua")
+  vim.notify("Reloaded keymaps.lua")
+end, { desc = "Reload Keymaps" })
